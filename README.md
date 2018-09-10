@@ -1,5 +1,5 @@
-# markov_twitter
-Generates tweets that mimic an existing user using Markov chains
+# markov-tweetbot
+Generates tweets that mimic an existing Twitter user using Markov chains for sentence generation of 140 characters
 
 ## Requirements
  - tweepy
