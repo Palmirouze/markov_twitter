@@ -1,5 +1,6 @@
 import tweepy
 import markovify
+import json
 
 consumer_key = ''
 consumer_secret = ''
@@ -8,10 +9,14 @@ access_secret = ''
 
 MAX_TIMELINE_POSTS = 200
 
+with open("twitter-credentials.json") as f:
+    credentials = json.load(f)
+
 #gets the timeline of a twitter user, 200 tweets at a time, for a choosen number of pages
 def get_tweets(n_page, twitter_user_name):
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_key, access_secret)
+
+    auth = tweepy.OAuthHandler(credentials["consumer_key"], credentials["consumer_secret"])
+    auth.set_access_token(credentials["access_key"], credentials["access_secret"])
     api = tweepy.API(auth)
 
     tweets = []
@@ -46,8 +51,7 @@ def print_markov_chain_tweet(text, n_tweet):
         print(markov_model.make_short_sentence(160, 30))
 
 
-user_name = ''
-timeline = get_tweets(10, user_name) #get 20 pages of
+timeline = get_tweets(10, credentials["target_account"]) #get 20 pages of
 processed_timeline = [trim_tweets(tweet) for tweet in timeline]
 text_timeline = "\n".join(processed_timeline)
 #print_markov_chain_tweet(text_timeline, 10)
